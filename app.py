@@ -200,7 +200,7 @@ with st.sidebar:
     st.markdown('<div class="eyebrow">DATA SOURCE</div>', unsafe_allow_html=True)
     default_db = os.environ.get("HEARTBEAT_DB", str(ROOT / "heartbeat.db"))
     db_text = st.text_input("SQLite database path", value=default_db)
-    refresh = st.button("↻  Refresh data", use_container_width=True)
+    refresh = st.button("↻  Refresh data", width="stretch")
     if refresh:
         st.rerun()
     st.markdown("---")
@@ -329,7 +329,7 @@ try:
         with st.container(border=True):
             panel_heading("Recent data-loss records", "Reported gaps are preserved; missing values are never fabricated.")
             if losses:
-                st.dataframe(pd.DataFrame([dict(x) for x in losses]).head(10), use_container_width=True, hide_index=True)
+                st.dataframe(pd.DataFrame([dict(x) for x in losses]).head(10), width="stretch", hide_index=True)
             else:
                 st.caption("No loss records for this session." if selected_session else "No session exists yet.")
 
@@ -352,7 +352,7 @@ try:
                     "Minimum": int(vals.min()) if len(vals) else None,
                     "Maximum": int(vals.max()) if len(vals) else None,
                 })
-            st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+            st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True)
             chart = pd.DataFrame({
                 f"Channel {i + 1}": selected["values"].apply(
                     lambda v: v[i] if len(v) > i else None
@@ -389,7 +389,7 @@ try:
             panel_heading("Loss ledger", "The source records the exact known range and reason. Unknown endpoints remain null.")
             if losses:
                 loss_df = pd.DataFrame([dict(x) for x in losses])
-                st.dataframe(loss_df, use_container_width=True, hide_index=True)
+                st.dataframe(loss_df, width="stretch", hide_index=True)
                 st.download_button(
                     "Export loss ledger CSV",
                     loss_df.to_csv(index=False),
@@ -411,7 +411,7 @@ try:
                 "Sample index": int(r["sample_index"]),
                 "Values": r["values_json"],
                 "Cloud synced": bool(r["synced"]),
-            } for r in samples[:1000]]), use_container_width=True, hide_index=True)
+            } for r in samples[:1000]]), width="stretch", hide_index=True)
             if len(samples) > 1000:
                 st.caption("Table preview limited to the first 1,000 records. The export includes all applicable records.")
             st.markdown("### Export session")
@@ -422,7 +422,7 @@ try:
                     export_jsonl(samples, losses, cloud_only=False),
                     file_name=f"{selected_session}-device.jsonl",
                     mime="application/x-ndjson",
-                    use_container_width=True,
+                    width="stretch",
                 )
             with e2:
                 st.download_button(
@@ -430,7 +430,7 @@ try:
                     export_jsonl(samples, losses, cloud_only=True),
                     file_name=f"{selected_session}-cloud.jsonl",
                     mime="application/x-ndjson",
-                    use_container_width=True,
+                    width="stretch",
                 )
             st.caption("Exports contain stored sample records followed by loss records. Cloud export includes only samples marked synced.")
 
