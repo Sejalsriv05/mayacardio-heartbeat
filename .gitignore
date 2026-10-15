@@ -1,0 +1,36 @@
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Databases and WAL journals
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Credentials & environment variables
+.env
+.env.*
+*.pem
+*.key
+*.token
+credentials.json
+
+# Logs, test outputs, and temporary files
+*.log
+output/
+audit_output/
+.DS_Store
+
+# Python packaging artifacts
+*.egg-info/
+build/
+dist/
